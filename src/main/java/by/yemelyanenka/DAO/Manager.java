@@ -11,4 +11,11 @@ public class Manager extends Person {
     public void setDepartment(String department) {
         this.department = department;
     }
+
+    @Override
+    public String toString() {
+        return "Manager{" +
+                "department='" + department + '\'' +
+                '}';
+    }
 }

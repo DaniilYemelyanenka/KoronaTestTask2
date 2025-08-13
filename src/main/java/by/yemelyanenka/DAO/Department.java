@@ -21,4 +21,12 @@ public class Department {
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
     }
+
+    @Override
+    public String toString() {
+        return "Department{" +
+                "manager=" + manager +
+                ", employees=" + employees +
+                '}';
+    }
 }
