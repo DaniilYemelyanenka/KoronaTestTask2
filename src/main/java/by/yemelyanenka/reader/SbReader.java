@@ -1,5 +1,7 @@
 package by.yemelyanenka.reader;
 
+import by.yemelyanenka.parser.Parser;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,7 +16,7 @@ public class SbReader {
         for(Path file : sbFiles){
             List<String> lines = Files.readAllLines(file);
             for(String line : lines){
-                System.out.println(line);
+                Parser.parseLine(line);
             }
         }
     }

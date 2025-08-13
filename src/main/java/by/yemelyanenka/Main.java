@@ -7,7 +7,6 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -50,6 +49,7 @@ public class Main {
                 handles.stream()
                         .filter(ArgumentHandle::isParsed)
                         .forEach(ArgumentHandle::handle);
+
 
                 Path currentPath = Paths.get("").toAbsolutePath().normalize();
 
