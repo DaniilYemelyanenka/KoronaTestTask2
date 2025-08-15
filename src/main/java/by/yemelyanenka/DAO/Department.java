@@ -1,10 +1,11 @@
 package by.yemelyanenka.DAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Department {
     private Manager manager;
-    private List<Employee> employees;
+    private List<Employee> employees = new ArrayList<>();
 
     public Manager getManager() {
         return manager;

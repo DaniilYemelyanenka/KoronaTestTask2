@@ -9,31 +9,32 @@ import java.util.*;
 
 public class Parser {
 
-    public static void parseLine(String line){
+    public static void parseLines(List<String> lines){
         Map<Integer,Manager> managerList = new HashMap<>();
         List<Employee> employeeList =  new ArrayList<>();
         List<String> errorLog = new ArrayList<>();
 
-       String[] item =  line.trim().split(",");
+
+        for(String line : lines){
+            String[] item =  line.trim().split(",");
 
 
-       Optional<Object> parsed = parseObject(item);
+            Optional<Object> parsed = parseObject(item);
 
-       if(parsed.isEmpty()){
-           errorLog.add(line);
-       }else{
-           Object object = parsed.get();
+            if(parsed.isEmpty()){
+                errorLog.add(line);
+            }else{
+                Object object = parsed.get();
 
-           if(object instanceof Manager){
-               managerList.put(((Manager) object).getId(), (Manager) object);
-           }
-           else if (object instanceof Employee){
-               employeeList.add( (Employee) object);
-           }
-       }
+                if(object instanceof Manager){
+                    managerList.put(((Manager) object).getId(), (Manager) object);
+                }
+                else if (object instanceof Employee){
+                    employeeList.add( (Employee) object);
+                }
+            }
+        }
 
-       //TODO  перенести этот кусок после считывания всех строк
-       
         Map<String, Department> totalList = new HashMap<>();
 
         for(Manager m : managerList.values()){
@@ -45,8 +46,8 @@ public class Parser {
             Manager emManager = managerList.get(employee.getManagerId());
 
             if(emManager != null){
-                totalList.get(emManager.getDepartment())
-                        .getEmployees().add(employee);
+                    totalList.get(emManager.getDepartment()).getEmployees().add(employee);
+
             }
 
         }
