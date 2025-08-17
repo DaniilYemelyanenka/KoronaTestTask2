@@ -1,13 +1,12 @@
 package by.yemelyanenka.output;
 
 import by.yemelyanenka.DAO.Department;
-import by.yemelyanenka.SortEmployees;
+import by.yemelyanenka.DAO.Stat;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,43 +16,49 @@ public class Output {
 
     public static Path path;
 
-    public static void printTotalList(Map<String, Department> totalList, Set<String> errorLog){
+    public static void printTotalList(Map<String, Department> totalList, Set<String> errorLog,Set<Stat> statisticSet){
 
-        StringBuilder dataForOutput = new StringBuilder();
-        totalList.forEach((departmentName,department) -> {
-            dataForOutput.append("*********").append(departmentName).append("***********").append("\n")
-                    .append(department);
-        });
-        dataForOutput.append("********* incorrect data ***********").append("\n");
-        errorLog.forEach( error -> {
-            dataForOutput.append(error);
-            dataForOutput.append("\n");
-        });
+        totalList.forEach( (departmentName,department) -> outputToFile(departmentName,department.toString()));
+
+        errorLog.forEach(error -> outputToFile("Error",error));
+
 
         if(printToConsole != null){
+            StringBuilder statisticString = new StringBuilder();
+            statisticString.append("Department,min,max,mid\n");
+            statisticSet.forEach(stat -> statisticString.append(stat.toString()));
             if(printToConsole){
-                printToConsole(dataForOutput.toString());
+                printStatisticToConsole(statisticString.toString());
             }else {
-                printToFile(dataForOutput.toString());
+                printStatisticToFile(statisticString.toString());
             }
         }
 
 
     }
 
-    private static void printToConsole(String data){
+    private static void printStatisticToConsole(String data){
         System.out.println(data);
     }
 
-    private static void printToFile(String data){
-        try {
-            Files.createDirectories(path.getParent());
+    private static void printStatisticToFile(String data){
+        outputToFile(String.valueOf(path),data);
+    }
 
-            try(FileWriter writer = new FileWriter(path.toFile(),false)) {
-                writer.write(data);
+    private static  void outputToFile(String name,String text){
+
+        if(path!=null){
+            try {
+                Files.createDirectories(path.getParent());
+            }catch(IOException e) {
+                throw new RuntimeException("Ошибка создания папок для пути вывод в файл. \n" + e);
             }
-        } catch (IOException e) {
-            throw new RuntimeException("Оштбка создания папок для пути вывод в файл. \n" + e);
         }
+
+            try (FileWriter writer = new FileWriter(Path.of(name).toFile(), false)) {
+                writer.write(text);
+            } catch (IOException e) {
+                throw new RuntimeException("При попытке записать итоговые данные в файл произошла ошибка");
+            }
     }
 }

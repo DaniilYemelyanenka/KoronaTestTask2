@@ -1,18 +1,18 @@
 package by.yemelyanenka.arguments;
 
-import by.yemelyanenka.ArgumentHandle;
+import by.yemelyanenka.interfaces.ArgumentHandle;
 import by.yemelyanenka.output.Output;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class OutputArgument  implements ArgumentHandle {
+
+    @Parameter(names = {"--stat"},description = "Включает генерацию статистики по депортаментам.")
+    private Boolean  stat = false;
 
     @Parameter(names = {"-o","--output"},description = "Способ вывода статистики. По умолчанию вывод в консоль")
     private String output;
@@ -37,7 +37,7 @@ public class OutputArgument  implements ArgumentHandle {
 
     @Override
     public boolean isParsed() {
-        return true;
+        return stat;
 
     }
 

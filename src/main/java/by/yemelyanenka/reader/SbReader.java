@@ -1,9 +1,7 @@
 package by.yemelyanenka.reader;
 
-import by.yemelyanenka.DAO.Department;
-import by.yemelyanenka.DAO.Employee;
-import by.yemelyanenka.DAO.Manager;
-import by.yemelyanenka.SortEmployees;
+import by.yemelyanenka.DAO.*;
+import by.yemelyanenka.sort.SortEmployees;
 import by.yemelyanenka.output.Output;
 import by.yemelyanenka.parser.Parser;
 
@@ -21,14 +19,42 @@ public class SbReader {
         Map<Integer, Manager> managerList = new HashMap<>();
         Set<Employee> employeeSet =  new HashSet<>();
         Set<String> errorLog = new HashSet<>();
+        Set<Stat> statisticSet = new HashSet<>();
 
         for(Path file : sbFiles){
             List<String> lines = Files.readAllLines(file);
             Parser.parseLines(lines,managerList,employeeSet,errorLog,totalList);
         }
 
+
+        totalList.forEach(((departmentName, department) -> {
+
+            List<Employee> employees = department.getEmployees();
+            Stat stat = new Stat();
+
+            Double min = employees.stream()
+                    .min(Comparator.comparing(Employee::getSalary))
+                    .map(Employee::getSalary).orElse(0.0);
+
+            Double max = employees.stream()
+                    .max(Comparator.comparing(Employee::getSalary))
+                    .map(Employee::getSalary).orElse(0.0);
+
+            Double mid = employees.stream()
+                        .mapToDouble(Employee::getSalary)
+                        .average()
+                        .orElse(0.0);
+
+            stat.setDepartmentName(departmentName);
+            stat.setMinSalary(min);
+            stat.setMaxSalary(max);
+            stat.setMidSalary(mid);
+            statisticSet.add(stat);
+        }));
+
         SortEmployees.sort(totalList);
-        Output.printTotalList(totalList,errorLog);
+
+        Output.printTotalList(totalList,errorLog,statisticSet);
 
     }
     public static List<Path> findSbFiles(Path directory) throws IOException {

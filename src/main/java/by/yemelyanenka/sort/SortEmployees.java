@@ -1,4 +1,4 @@
-package by.yemelyanenka;
+package by.yemelyanenka.sort;
 
 import by.yemelyanenka.DAO.Department;
 import by.yemelyanenka.DAO.Person;

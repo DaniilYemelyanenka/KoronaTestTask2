@@ -12,7 +12,7 @@ public class Person {
         return role;
     }
 
-    public Double getSalary() {
+    public double getSalary() {
         return salary;
     }
 

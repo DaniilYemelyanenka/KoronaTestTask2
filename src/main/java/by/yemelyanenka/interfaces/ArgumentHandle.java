@@ -1,4 +1,4 @@
-package by.yemelyanenka;
+package by.yemelyanenka.interfaces;
 
 public interface ArgumentHandle {
     void handle();

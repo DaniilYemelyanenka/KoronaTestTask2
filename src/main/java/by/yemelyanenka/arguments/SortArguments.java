@@ -1,7 +1,7 @@
 package by.yemelyanenka.arguments;
 
-import by.yemelyanenka.ArgumentHandle;
-import by.yemelyanenka.SortEmployees;
+import by.yemelyanenka.interfaces.ArgumentHandle;
+import by.yemelyanenka.sort.SortEmployees;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
 
