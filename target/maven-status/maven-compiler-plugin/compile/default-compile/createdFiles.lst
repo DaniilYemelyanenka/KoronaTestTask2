@@ -8,6 +8,7 @@ by/yemelyanenka/DAO/Department.class
 by/yemelyanenka/DAO/Employee.class
 by/yemelyanenka/interfaces/ArgumentHandle.class
 by/yemelyanenka/sort/SortEmployees.class
+by/yemelyanenka/DAO/Error.class
 by/yemelyanenka/DAO/Manager.class
 by/yemelyanenka/reader/SbReader.class
 by/yemelyanenka/DAO/Stat.class
