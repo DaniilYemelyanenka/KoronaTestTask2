@@ -1,9 +1,12 @@
 package by.yemelyanenka.arguments;
 
 import by.yemelyanenka.ArgumentHandle;
+import by.yemelyanenka.output.Output;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
@@ -12,7 +15,7 @@ import java.nio.file.Paths;
 public class OutputArgument  implements ArgumentHandle {
 
     @Parameter(names = {"-o","--output"},description = "Способ вывода статистики. По умолчанию вывод в консоль")
-    private String output = "console";
+    private String output;
 
     @Parameter(names = {"-p","--path"},description = "Путь к файлу со статистикой.")
     private String path;
@@ -20,28 +23,22 @@ public class OutputArgument  implements ArgumentHandle {
 
     @Override
     public void handle() {
-        System.out.println("Handle output");
+        if(output == null){
+            Output.printToConsole = true;
+            output = "console";
+        }else if(output.equalsIgnoreCase("file")){
+            Output.printToConsole = false;
+        }
+
+        if(path!= null && isValidPath(path)){
+            Output.path = Path.of(path);
+        }
     }
 
     @Override
     public boolean isParsed() {
-        return output!=null;
-    }
+        return true;
 
-    private boolean isPathCorrect(String path){
-
-        Path fspath = Paths.get(path);
-
-        if(isValidPath(path)){
-            if (Files.exists(fspath)){
-                System.out.println("Файл найден работаю ...");
-                return true;
-            }else {
-                throw new ParameterException("Искомый файл не существует");
-            }
-        }else{
-            throw new ParameterException("Путь к искомому файлу некорректен");
-        }
     }
 
     public static boolean isValidPath(String pathStr) {
@@ -49,7 +46,7 @@ public class OutputArgument  implements ArgumentHandle {
             Paths.get(pathStr);
             return true;
         } catch (InvalidPathException e) {
-            return false;
+            throw new ParameterException("Путь к искомому файлу некорректен");
         }
     }
 }

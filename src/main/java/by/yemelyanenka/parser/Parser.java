@@ -9,11 +9,11 @@ import java.util.*;
 
 public class Parser {
 
-    public static void parseLines(List<String> lines){
-        Map<Integer,Manager> managerList = new HashMap<>();
-        List<Employee> employeeList =  new ArrayList<>();
-        List<String> errorLog = new ArrayList<>();
-
+    public static void parseLines(List<String> lines,
+                                  Map<Integer,Manager> managerList,
+                                  Set<Employee> employeeSet,
+                                  Set<String> errorLog,
+                                  Map<String, Department> totalList){
 
         for(String line : lines){
             String[] item =  line.trim().split(",");
@@ -30,19 +30,17 @@ public class Parser {
                     managerList.put(((Manager) object).getId(), (Manager) object);
                 }
                 else if (object instanceof Employee){
-                    employeeList.add( (Employee) object);
+                    employeeSet.add( (Employee) object);
                 }
             }
         }
-
-        Map<String, Department> totalList = new HashMap<>();
 
         for(Manager m : managerList.values()){
             Department department = new Department();
             department.setManager(m);
             totalList.put(m.getDepartment(),department);
         }
-        for (Employee employee : employeeList){
+        for (Employee employee : employeeSet){
             Manager emManager = managerList.get(employee.getManagerId());
 
             if(emManager != null){
@@ -51,10 +49,6 @@ public class Parser {
             }
 
         }
-
-        Output.printTotalList(totalList,errorLog);
-
-
     }
 
     private static Optional<Object> parseObject(String[] lineToParse){
