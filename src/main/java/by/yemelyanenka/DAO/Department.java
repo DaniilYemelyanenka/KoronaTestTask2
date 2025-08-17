@@ -25,9 +25,9 @@ public class Department {
 
     @Override
     public String toString() {
-        return "Department{" +
-                "manager=" + manager +
-                ", employees=" + employees +
-                '}';
+        StringBuilder builder = new StringBuilder();
+        builder.append(manager).append(";\n");
+        employees.forEach(employee -> builder.append(employee).append(";\n"));
+        return builder.toString();
     }
 }

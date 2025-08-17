@@ -14,7 +14,7 @@ public class OutputArgument  implements ArgumentHandle {
     @Parameter(names = {"-o","--output"},description = "Способ вывода статистики. По умолчанию вывод в консоль")
     private String output = "console";
 
-    @Parameter(names = {"-p","--path"},description = "Путь к файлу со статистикой.",required = true)
+    @Parameter(names = {"-p","--path"},description = "Путь к файлу со статистикой.")
     private String path;
 
 

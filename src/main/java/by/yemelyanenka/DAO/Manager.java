@@ -14,8 +14,7 @@ public class Manager extends Person {
 
     @Override
     public String toString() {
-        return "Manager{" +
-                "department='" + department + '\'' +
-                '}';
+        return  super.toString() +
+                ", " + department;
     }
 }

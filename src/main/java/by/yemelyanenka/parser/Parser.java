@@ -22,7 +22,7 @@ public class Parser {
             Optional<Object> parsed = parseObject(item);
 
             if(parsed.isEmpty()){
-                errorLog.add(line);
+                errorLog.add(line + ";");
             }else{
                 Object object = parsed.get();
 
@@ -52,7 +52,7 @@ public class Parser {
 
         }
 
-        Output.printTotalList(totalList);
+        Output.printTotalList(totalList,errorLog);
 
 
     }
@@ -70,7 +70,9 @@ public class Parser {
                 if(!lineToParse[3].isEmpty()){
                     Double buffedSalary = Double.parseDouble(lineToParse[3]);
                     if(buffedSalary>0) salary = buffedSalary;
-                }
+                        else return Optional.empty();
+                } else
+                    return Optional.empty();
 
                 if(role.equalsIgnoreCase("Manager")){
 

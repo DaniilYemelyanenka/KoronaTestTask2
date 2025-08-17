@@ -18,11 +18,14 @@ public class SortArguments implements ArgumentHandle {
     public void handle() {
         if(checkSortArguments(sort,order) ){
 
-            if (order == null) {
-                order = "asc";
+            if (order == null || order.equalsIgnoreCase("asc")){
+                SortEmployees.sortByAsc = true;
+            }else if(order.equalsIgnoreCase("desc")){
+                SortEmployees.sortByAsc = false;
             }
 
-            SortEmployees.sort(sort,order);
+            if(sort.equalsIgnoreCase("name")) SortEmployees.sortByName = true;
+            else if(sort.equalsIgnoreCase("salary")) SortEmployees.sortByName = false;
         }
 
     }
