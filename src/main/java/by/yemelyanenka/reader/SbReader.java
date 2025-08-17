@@ -1,6 +1,7 @@
 package by.yemelyanenka.reader;
 
 import by.yemelyanenka.DAO.*;
+import by.yemelyanenka.DAO.Error;
 import by.yemelyanenka.sort.SortEmployees;
 import by.yemelyanenka.output.Output;
 import by.yemelyanenka.parser.Parser;
@@ -18,7 +19,7 @@ public class SbReader {
         Map<String, Department> totalList = new HashMap<>();
         Map<Integer, Manager> managerList = new HashMap<>();
         Set<Employee> employeeSet =  new HashSet<>();
-        Set<String> errorLog = new HashSet<>();
+        Set<Error> errorLog = new HashSet<>();
         Set<Stat> statisticSet = new HashSet<>();
 
         for(Path file : sbFiles){

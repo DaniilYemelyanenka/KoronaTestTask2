@@ -1,6 +1,7 @@
 package by.yemelyanenka.output;
 
 import by.yemelyanenka.DAO.Department;
+import by.yemelyanenka.DAO.Error;
 import by.yemelyanenka.DAO.Stat;
 
 import java.io.FileWriter;
@@ -16,11 +17,14 @@ public class Output {
 
     public static Path path;
 
-    public static void printTotalList(Map<String, Department> totalList, Set<String> errorLog,Set<Stat> statisticSet){
+    public static void printTotalList(Map<String, Department> totalList, Set<Error> errorLog, Set<Stat> statisticSet){
 
         totalList.forEach( (departmentName,department) -> outputToFile(departmentName,department.toString()));
 
-        errorLog.forEach(error -> outputToFile("Error",error));
+        StringBuilder builder = new StringBuilder();
+        errorLog.forEach(error -> builder.append(error.toString()));
+        outputToFile("Error",builder.toString());
+
 
 
         if(printToConsole != null){

@@ -2,6 +2,7 @@ package by.yemelyanenka.parser;
 
 import by.yemelyanenka.DAO.Department;
 import by.yemelyanenka.DAO.Employee;
+import by.yemelyanenka.DAO.Error;
 import by.yemelyanenka.DAO.Manager;
 import by.yemelyanenka.output.Output;
 
@@ -12,7 +13,7 @@ public class Parser {
     public static void parseLines(List<String> lines,
                                   Map<Integer,Manager> managerList,
                                   Set<Employee> employeeSet,
-                                  Set<String> errorLog,
+                                  Set<Error> errorLog,
                                   Map<String, Department> totalList){
 
         for(String line : lines){
@@ -22,7 +23,7 @@ public class Parser {
             Optional<Object> parsed = parseObject(item);
 
             if(parsed.isEmpty()){
-                errorLog.add(line + ";");
+                errorLog.add(new Error(line));
             }else{
                 Object object = parsed.get();
 
